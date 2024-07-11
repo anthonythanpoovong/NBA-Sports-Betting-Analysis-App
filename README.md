@@ -1,2 +1,2 @@
 # CSV Dataset for ML
-- From 2016 tp 2022
+- From 2016 to 2022
