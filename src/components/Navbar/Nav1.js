@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Home Page', href: '#home-page', current: true },
-  { name: 'Bet Predictions', href: '#bet-predictions', current: false },
-  { name: 'About Us', href: '#about-us', current: false },
+  { name: 'Home Page', href: '#', current: true },
+  { name: 'Bet Predictions', href: '#', current: false },
+  { name: 'About Us', href: '#', current: false },
   { name: 'Extra Nav', href: '#', current: false },
-];
+]
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function Example() {
-  const [isSun, setIsSun] = useState(true); // Initial state is sun
-
-  const toggleIcon = () => {
-    setIsSun(!isSun); // Toggle between sun and moon
-  };
-
   return (
     <Disclosure as="nav" className="bg-[#7f1d1d]">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -50,7 +42,7 @@ export default function Example() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-650 hover:text-white',
+                      item.current ? 'bg-[#333333] text-white' : 'text-gray-300 hover:bg-gray-650 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium',
                     )}
                   >
@@ -63,28 +55,11 @@ export default function Example() {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              className={`
-                relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white
-                focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800
-                transition-all duration-300 border-2 border-gray-800
-              `}
-              style={{
-                width: '2rem',
-                height: '2rem',
-              }}
-              onClick={toggleIcon}
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
-              <span className="absolute -inset-0.5 border-2 border-gray-800 rounded-full" />
-              <span className="sr-only">Toggle theme</span>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className={`transform transition-transform duration-300 ease-in-out ${isSun ? 'scale-125' : 'scale-100'}`}>
-                  {isSun ? (
-                    <SunIcon aria-hidden="true" className="h-5 w-5" />
-                  ) : (
-                    <MoonIcon aria-hidden="true" className="h-5 w-5" />
-                  )}
-                </div>
-              </div>
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <BellIcon aria-hidden="true" className="h-6 w-6" />
             </button>
 
             {/* Profile dropdown */}
@@ -144,5 +119,5 @@ export default function Example() {
         </div>
       </DisclosurePanel>
     </Disclosure>
-  );
+  )
 }
