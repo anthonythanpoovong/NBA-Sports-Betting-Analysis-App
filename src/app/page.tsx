@@ -1,21 +1,20 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import Navbar from "../components/Navbar.js";
 
 export default function Home() {
   return (
-   
-      <div>
+    <main className="bg-[#333333] min-h-screen">
+      <div >
         
-        
-        <h1 className="bg-black">
-          Yooo
-          </h1> 
-          <p>
-          Get started by editing&nbsp;
-          <code>src/app/page.tsx</code>
-        </p>
-          
+
+        {/*Navbar*/}
+        <Navbar/>
+        {/*Sidebar*/}
+        {/*Features*/}
+        {/*Footer*/}
+
       </div>
+    </main>
     
   );
 }
