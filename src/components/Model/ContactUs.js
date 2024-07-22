@@ -1,38 +1,52 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Field, Label, Switch } from '@headlessui/react';
 
 const Example = () => {
   const [agreed, setAgreed] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-  const [submitting, setSubmitting] = useState(false); // State for tracking submission
-  const [submitted, setSubmitted] = useState(false); // State for tracking successful submission
-  const [error, setError] = useState(null); // State for tracking submission error
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const togglePrivacyPolicy = () => {
     setShowPrivacyPolicy(!showPrivacyPolicy);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate form submission process
-    setSubmitting(true); // Start submission animation
-    setTimeout(() => {
-      // Simulate random success or failure
-      const success = Math.random() < 0.6; // 60% chance of success
-      if (success) {
-        setSubmitting(false); // Reset submission state
-        setSubmitted(true); // Mark form as successfully submitted
-        setError(null); // Clear any existing error
-        // Optionally, reset form fields or show a success message
-        setTimeout(() => {
-          setSubmitted(false); // Reset submitted state after 3 seconds (simulation)
-        }, 3000); // Simulate 3 seconds delay for success message
-      } else {
-        setSubmitting(false); // Reset submission state
-        setError('Failed to submit form. Please try again.'); // Set error message
-      }
-    }, 2000); // Simulate 2 seconds delay for submission animation
+    setSubmitting(true);
+    setError(null);
+
+    const form = e.target;
+    const formData = {
+      name: `${form['first-name'].value} ${form['last-name'].value}`,
+      lastName: form['last-name'].value,
+      company: form['company'].value,
+      email: form['email'].value,
+      phoneNumber: form['phone-number'].value,
+      message: form['message'].value,
+    };
+
+    try {
+      await emailjs.send(
+        'service_pxqmtns', // Replace with your EmailJS service ID
+        'template_yqo44pm', // Replace with your EmailJS template ID
+        formData,
+        'KOvcA39Zk4St-Zijm' // Replace with your EmailJS user ID
+      );
+
+      setSubmitted(true);
+      form.reset();
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+    } catch (err) {
+      setError('Failed to submit form. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
