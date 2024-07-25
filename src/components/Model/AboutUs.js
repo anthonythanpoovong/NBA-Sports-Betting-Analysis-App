@@ -1,22 +1,29 @@
 import React from 'react';
 import Footer from "../Footer";
 import ContactUs from "./ContactUs";
+import Image from 'next/image';
+import abel from "../../assets/abel_pic.jpg";
+import anthony from "../../assets/Anthony_pic.jpg";
+import UAS from "../../assets/UAS.jpg";
+import ATLink from "../../assets/logo.png";
+
 
 const teamMembers = [
   {
-    name: 'Abel',
-    role: 'Frontend Developer',
-    imageUrl: 'path/to/abel.jpg',
+    name: 'Abel Thomas',
+    role: 'Frontend Developer for Sports Betting Analysis Website',
+    imageUrl: abel.src,
     bio: 'Abel is a skilled frontend developer with a passion for creating interactive user experiences.',
-    github: 'https://github.com/abel',
-    linkedin: 'https://linkedin.com/in/abel',
-    twitter: 'https://twitter.com/abel',
-    skills: ['React', 'JavaScript', 'UI/UX Design'],
+    github: 'https://github.com/AT1XX',
+    linkedin: 'https://www.linkedin.com/in/abel-thomas-921bab251/',
+    instagram: 'https://www.instagram.com/abel.thoms1/',
+    skills: ['React', 'JavaScript', 'Node', 'Python', 'Java', 'SQL'],
     projects: [
       {
-        name: 'Project A',
-        imageUrl: 'path/to/projectA.jpg',
-        description: 'Built a responsive web application using React and Node.js.',
+        name: 'Personal Portfolio',
+        imageUrl: ATLink.src,
+        description: 'A personalized website built utilizing React, JavaScript, CSS, HTML, and GitHub extension functionalities to display my unique abilities as a website.',
+        url: 'https://at2002.netlify.app/',
       },
       // Add more projects as needed
     ],
@@ -29,25 +36,26 @@ const teamMembers = [
     ],
   },
   {
-    name: 'Anthony',
-    role: 'Backend Developer',
-    imageUrl: 'path/to/anthony.jpg',
+    name: 'Anthony Thanpoovong',
+    role: 'Backend Developer for Sports Betting Analysis Website',
+    imageUrl: anthony.src,
     bio: 'Anthony specializes in backend development and is adept at building robust and scalable applications.',
-    github: 'https://github.com/anthony',
-    linkedin: 'https://linkedin.com/in/anthony',
-    twitter: 'https://twitter.com/anthony',
-    skills: ['React', 'JavaScript', 'UI/UX Design'],
+    github: 'https://github.com/anthonythanpoovong',
+    linkedin: 'https://www.linkedin.com/in/anthony-thanpoovong/',
+    instagram: 'https://www.instagram.com/anthony.thanpoovong/',
+    skills: ['Java', 'Python', 'SQL', 'HTML', 'CSS','Linux'],
     projects: [
       {
-        name: 'Project A',
-        imageUrl: 'path/to/projectA.jpg',
-        description: 'Built a responsive web application using React and Node.js.',
+        name: 'University Administration System',
+        imageUrl: UAS.src,
+        description: 'A university administration system that mainpulates SQL and Oracle Apex Database',
+        url: 'https://github.com/anthonythanpoovong/University-Administration-System?tab=readme-ov-file',
       },
       // Add more projects as needed
     ],
     testimonials: [
       {
-        quote: 'Working with Abel and his team was a fantastic experience. They delivered beyond our expectations!',
+        quote: 'Working with Anthony and his team was a fantastic experience. They delivered beyond our expectations!',
         author: 'John Doe, CEO of Example Inc.',
       },
       // Add more testimonials as needed
@@ -61,7 +69,7 @@ const teamMembers = [
     github: 'https://github.com/dylan',
     linkedin: 'https://linkedin.com/in/dylan',
     twitter: 'https://twitter.com/dylan',
-    skills: ['React', 'JavaScript', 'UI/UX Design'],
+    skills: ['Java', 'Python', 'SQL', 'HTML', 'CSS','Linux'],
     projects: [
       {
         name: 'Project A',
@@ -99,22 +107,22 @@ const AboutUs = ({ theme }) => {
                 <p className={`text-gray-400 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{member.role}</p>
                 <p className={`mt-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{member.bio}</p>
                 <div className="mt-4 flex space-x-3">
-                  <a href={member.github} className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
+                  <a href={member.github} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
                     <span className="sr-only">GitHub</span>
                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path fillRule="evenodd" d="M12 2C6.478 2 2 6.478 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.461-1.11-1.461-.907-.62.069-.607.069-.607 1.002.07 1.53 1.03 1.53 1.03.892 1.528 2.341 1.087 2.91.831.092-.646.349-1.087.634-1.338-2.22-.254-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.447-1.274.097-2.654 0 0 .84-.269 2.75 1.024A9.561 9.561 0 0112 6.837c.85.004 1.705.114 2.504.334 1.909-1.293 2.748-1.024 2.748-1.024.546 1.38.202 2.401.1 2.654.641.699 1.028 1.592 1.028 2.683 0 3.841-2.339 4.685-4.565 4.934.36.31.678.924.678 1.861 0 1.345-.012 2.427-.012 2.754 0 .268.18.58.688.482A10.002 10.002 0 0022 12c0-5.522-4.478-10-10-10z" clipRule="evenodd" />
                     </svg>
                   </a>
-                  <a href={member.linkedin} className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
+                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
                     <span className="sr-only">LinkedIn</span>
                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path fillRule="evenodd" d="M19.25 3H4.75C4.34 3 4 3.34 4 3.75v16.5c0 .41.34.75.75.75h14.5c.41 0 .75-.34.75-.75V3.75c0-.41-.34-.75-.75-.75zM8.75 18h-2V9h2v9zm-1-10.02c-.69 0-1.25-.57-1.25-1.27 0-.7.56-1.26 1.25-1.26.69 0 1.25.56 1.25 1.26 0 .7-.56 1.27-1.25 1.27zm10.75 10.02h-2v-4.83c0-2.11-2.5-1.95-2.5 0V18h-2V9h2v1.02c.87-1.68 4-1.81 4 1.6V18z" clipRule="evenodd" />
                     </svg>
                   </a>
-                  <a href={member.twitter} className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
-                    <span className="sr-only">Twitter</span>
+                  <a href={member.instagram} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
+                    <span className="sr-only">Instagram</span>
                     <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path fillRule="evenodd" d="M23 4.01c-.82.36-1.71.61-2.64.72.95-.57 1.68-1.47 2.03-2.54-.89.52-1.87.9-2.92 1.1a4.93 4.93 0 00-8.39 4.48A13.98 13.98 0 011.64 3.16a4.93 4.93 0 001.53 6.58 4.91 4.91 0 01-2.23-.62v.06a4.93 4.93 0 003.95 4.83c-.73.2-1.49.3-2.26.11a4.93 4.93 0 004.6 3.42A9.88 9.88 0 010 20.9a13.94 13.94 0 007.55 2.22c9.06 0 14.02-7.5 14.02-14v-.64c.95-.68 1.77-1.52 2.42-2.48a9.86 9.86 0 01-2.86.79 4.91 4.91 0 002.14-2.71c-.89.52-1.87.9-2.92 1.1a4.93 4.93 0 00-8.39 4.48z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M7.75 2C5.13 2 3 4.13 3 6.75v10.5C3 19.87 5.13 22 7.75 22h10.5c2.62 0 4.75-2.13 4.75-4.75V6.75C23 4.13 20.87 2 18.25 2H7.75zM7.5 4h9c1.93 0 3.5 1.57 3.5 3.5v9c0 1.93-1.57 3.5-3.5 3.5h-9C5.57 20 4 18.43 4 16.5v-9C4 5.57 5.57 4 7.5 4zm7.5 2.25a.75.75 0 110 1.5.75.75 0 010-1.5zm-5.75 3a4 4 0 100 8 4 4 0 000-8zm0 1.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5z" clipRule="evenodd" />
                     </svg>
                   </a>
                 </div>
@@ -131,9 +139,13 @@ const AboutUs = ({ theme }) => {
                   <div className="mt-2 space-y-2">
                     {member.projects.map((project) => (
                       <div key={project.name} className="flex items-center">
-                        <img className="w-8 h-8 rounded-full mr-2" src={project.imageUrl} alt={project.name} />
+                        <img className="w-18 h-8 rounded mr-2" src={project.imageUrl} alt={project.name} />
                         <div>
-                          <p className={`text-gray-300 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{project.name}</p>
+                          <p className={`text-gray-300 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                            <a href={project.url} target="_blank" rel="noopener noreferrer" className={`hover:underline ${theme === 'dark' ? 'text-indigo-400' : 'text-indigo-600'}`}>
+                              {project.name}
+                            </a>
+                          </p>
                           <p className={`text-gray-400 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{project.description}</p>
                         </div>
                       </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import Footer from "./Footer";
+import Image from 'next/image';
+import nbalogo from "../assets/nba-logo-transparent.png";
 
 const HomePage = ({ theme }) => {
   const isDarkTheme = theme === 'dark';
@@ -8,11 +10,14 @@ const HomePage = ({ theme }) => {
     <div className={`py-12 ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <header className="text-center mb-8">
-          <img
-            src="/nba-logo.png" // Replace with the actual path to your NBA logo image
-            alt="NBA Logo"
-            className="h-16 mx-auto mb-4"
-          />
+        <div className="relative h-17 w-16 mx-auto mb-4"> {/* Use fixed height and width */}
+            <Image
+              src={nbalogo}
+              alt="NBA Logo"
+              layout="responsive" // Maintain aspect ratio
+              objectFit="contain" // Ensure the image is contained within the specified dimensions
+            />
+          </div>
           <h1 className={`text-4xl font-bold ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>NBA Prediction Hub</h1>
           <p className={`mt-2 text-lg ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>Your go-to place for NBA predictions and insights</p>
         </header>
