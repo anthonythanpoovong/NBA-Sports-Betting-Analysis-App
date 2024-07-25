@@ -3,7 +3,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
-const navigation = [
+const initialNavigation = [
   { name: 'Home Page', href: '#home-page', current: true },
   { name: 'Bet Predictions', href: '#bet-predictions', current: false },
   { name: 'About Us', href: '#about-us', current: false },
@@ -15,7 +15,18 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const [navigation, setNavigation] = useState(initialNavigation);
   const [isSun, setIsSun] = useState(true); // Initial state is sun
+
+  const handleNavigationClick = (clickedItemName) => {
+    setNavigation((prevNavigation) =>
+      prevNavigation.map((item) =>
+        item.name === clickedItemName
+          ? { ...item, current: true }
+          : { ...item, current: false }
+      )
+    );
+  };
 
   const toggleIcon = () => {
     setIsSun(!isSun); // Toggle between sun and moon
@@ -26,7 +37,7 @@ export default function Example() {
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
+            {/* Mobile menu button */}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
@@ -49,9 +60,10 @@ export default function Example() {
                     key={item.name}
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
+                    onClick={() => handleNavigationClick(item.name)}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-650 hover:text-white',
-                      'rounded-md px-3 py-2 text-sm font-medium',
+                      item.current ? 'bg-gray-900 text-white rounded-lg shadow-md transition-all duration-200 transform scale-105' : 'text-gray-300 hover:bg-gray-650 hover:text-white rounded-lg transition-all duration-300',
+                      'block px-3 py-2 text-sm font-medium',
                     )}
                   >
                     {item.name}
@@ -133,9 +145,10 @@ export default function Example() {
               as="a"
               href={item.href}
               aria-current={item.current ? 'page' : undefined}
+              onClick={() => handleNavigationClick(item.name)}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
+                item.current ? 'bg-gray-900 text-white rounded-lg shadow-md transition-all duration-300 transform scale-105' : 'text-gray-300 hover:bg-gray-700 hover:text-white rounded-lg transition-all duration-300',
+                'block px-3 py-2 text-base font-medium',
               )}
             >
               {item.name}

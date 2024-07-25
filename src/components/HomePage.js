@@ -1,10 +1,21 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import Footer from "./Footer";
 import Image from 'next/image';
 import nbalogo from "../assets/nba-logo-transparent.png";
+import { fetchNbaNews } from './fetchNews';
 
 const HomePage = ({ theme }) => {
+  const [newsArticles, setNewsArticles] = useState([]);
   const isDarkTheme = theme === 'dark';
+
+  useEffect(() => {
+    const getNews = async () => {
+      const articles = await fetchNbaNews();
+      setNewsArticles(articles);
+    };
+    getNews();
+  }, []);
 
   return (
     <div className={`py-12 ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
@@ -64,22 +75,28 @@ const HomePage = ({ theme }) => {
             <p className={`mt-2 text-lg ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>Stay updated with the latest NBA news and developments.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {/* Example news cards */}
-            <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
-              <h3 className="text-lg font-semibold mb-2">News Title 1</h3>
-              <p className="text-sm text-gray-500 mb-4">Brief description of the news article. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Read More</a>
-            </div>
-            <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
-              <h3 className="text-lg font-semibold mb-2">News Title 2</h3>
-              <p className="text-sm text-gray-500 mb-4">Brief description of the news article. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Read More</a>
-            </div>
-            <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
-              <h3 className="text-lg font-semibold mb-2">News Title 3</h3>
-              <p className="text-sm text-gray-500 mb-4">Brief description of the news article. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Read More</a>
-            </div>
+            {newsArticles.length > 0 ? newsArticles.slice(0, 6).map((article, index) => (
+              <div key={index} className={`flex flex-col p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
+                <div className="flex-grow mb-4">
+                  {article.urlToImage && (
+                    <div className="relative h-40 w-full mb-4">
+                      <Image
+                        src={article.urlToImage}
+                        alt={article.title}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-lg"
+                      />
+                    </div>
+                  )}
+                  <h3 className="text-lg font-semibold mb-2">{article.title}</h3>
+                  <p className="text-sm text-gray-500 mb-4">{article.description}</p>
+                </div>
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className={`block mt-auto text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Read More</a>
+              </div>
+            )) : (
+              <p className={`text-center ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>Loading news...</p>
+            )}
           </div>
         </section>
 
