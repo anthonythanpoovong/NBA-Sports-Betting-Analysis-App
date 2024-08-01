@@ -11,7 +11,7 @@ import ATLink from "../../assets/logo.png";
 const teamMembers = [
   {
     name: 'Abel Thomas',
-    role: 'Frontend Developer for Sports Betting Analysis Website',
+    role: 'Full Stack  Developer for Sports Betting Analysis Website',
     imageUrl: abel.src,
     bio: 'Abel is a skilled frontend developer with a passion for creating interactive user experiences.',
     github: 'https://github.com/AT1XX',
@@ -29,8 +29,7 @@ const teamMembers = [
     ],
     testimonials: [
       {
-        quote: 'Working with Abel and his team was a fantastic experience. They delivered beyond our expectations!',
-        author: 'John Doe, CEO of Example Inc.',
+        
       },
       // Add more testimonials as needed
     ],
@@ -135,7 +134,7 @@ const AboutUs = ({ theme }) => {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <h4 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Projects</h4>
+                  <h4 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Know more about me</h4>
                   <div className="mt-2 space-y-2">
                     {member.projects.map((project) => (
                       <div key={project.name} className="flex items-center">
@@ -153,7 +152,7 @@ const AboutUs = ({ theme }) => {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <h4 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Testimonials</h4>
+                  <h4 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}></h4>
                   <div className="mt-2">
                     {member.testimonials.map((testimonial, index) => (
                       <div key={index} className="mt-4">

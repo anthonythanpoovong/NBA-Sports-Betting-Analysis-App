@@ -22,12 +22,27 @@ const Example = () => {
     const form = e.target;
     const formData = {
       name: `${form['first-name'].value} ${form['last-name'].value}`,
+      firstName: form['first-name'].value,
       lastName: form['last-name'].value,
       company: form['company'].value,
       email: form['email'].value,
       phoneNumber: form['phone-number'].value,
       message: form['message'].value,
     };
+
+    // Validation: Check if all fields are filled and privacy policy is agreed
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.phoneNumber ||
+      !formData.message ||
+      !agreed
+    ) {
+      setError('Please fill in all fields and agree to the privacy policy.');
+      setSubmitting(false);
+      return;
+    }
 
     try {
       await emailjs.send(
@@ -50,7 +65,7 @@ const Example = () => {
   };
 
   return (
-    <div id="#contact-us" className="bg-gray-900 text-gray-300 px-6 py-24 sm:py-32 lg:px-8">
+    <div id="contact-us" className="bg-gray-900 text-gray-300 px-6 py-24 sm:py-32 lg:px-8">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
@@ -81,6 +96,7 @@ const Example = () => {
                 name="first-name"
                 type="text"
                 autoComplete="given-name"
+                placeholder="John"
                 className="block w-full rounded-md border-0 px-3.5 py-2 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -95,6 +111,7 @@ const Example = () => {
                 name="last-name"
                 type="text"
                 autoComplete="family-name"
+                placeholder="David"
                 className="block w-full rounded-md border-0 px-3.5 py-2 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -109,6 +126,7 @@ const Example = () => {
                 name="company"
                 type="text"
                 autoComplete="organization"
+                placeholder="Company Name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -123,6 +141,7 @@ const Example = () => {
                 name="email"
                 type="email"
                 autoComplete="email"
+                placeholder="email@example.com"
                 className="block w-full rounded-md border-0 px-3.5 py-2 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -154,7 +173,9 @@ const Example = () => {
                 id="phone-number"
                 name="phone-number"
                 type="tel"
+                pattern="^\d{3}-\d{3}-\d{4}$|^\d{10}$"
                 autoComplete="tel"
+                placeholder="123-456-7890"
                 className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -168,8 +189,8 @@ const Example = () => {
                 id="message"
                 name="message"
                 rows={4}
+                placeholder="Your message"
                 className="block w-full rounded-md border-0 px-3.5 py-2 bg-gray-800 text-gray-300 shadow-sm ring-1 ring-inset ring-gray-600 placeholder-text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue={''}
               />
             </div>
           </div>
@@ -203,6 +224,7 @@ const Example = () => {
           <button
             type="submit"
             className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            disabled={submitting || submitted}
           >
             {submitting ? (
               <div className="flex items-center justify-center">

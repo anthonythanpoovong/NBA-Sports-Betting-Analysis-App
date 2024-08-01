@@ -4,7 +4,7 @@ const Footer = ({ theme }) => {
   const isDarkTheme = theme === 'dark';
 
   return (
-    <footer className={`bg-gray-800 ${isDarkTheme ? 'text-gray-400' : 'text-gray-300'}`}>
+    <footer className={`bg-gray-800 ${isDarkTheme ? 'text-gray-400' : 'text-gray-300'} w-full`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -19,7 +19,7 @@ const Footer = ({ theme }) => {
               <li><a href="#" className="hover:underline">Home</a></li>
               <li><a href="#about-us" className="hover:underline">About Us</a></li>
               <li><a href="#bet-predictions" className="hover:underline">Bet Predictions</a></li>
-              <li><a href="#contact-us" className="hover:underline">Contact Us</a></li>
+              <li><a href="#about-us" className="hover:underline">Contact Us</a></li>
             </ul>
           </div>
         </div>

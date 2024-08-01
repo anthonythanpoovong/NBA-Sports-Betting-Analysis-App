@@ -4,6 +4,9 @@ import Navbar from '../components/Navbar.js';
 import AboutUs from '../components/Model/AboutUs.js';
 import HomePage from "../components/HomePage.js";
 import BetPredictions from '../components/Model/BetPredictions.js';
+import Login from '../components/pages/Login.js'
+import Register from '../components/pages/Register.js'
+import Modal from 'react-modal';
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState('');
@@ -14,6 +17,10 @@ export default function Home() {
         setCurrentPage('about-us');
       } else if (window.location.hash === '#bet-predictions') {
         setCurrentPage('bet-predictions');
+      } else if (window.location.hash === '#login') {
+        setCurrentPage('login');
+      } else if (window.location.hash === '#register') {
+        setCurrentPage('register');
       } else {
         setCurrentPage('home-page');
       }
@@ -37,6 +44,8 @@ export default function Home() {
         {currentPage === 'home-page' && <HomePage theme="dark"/>}
         {currentPage === 'about-us' && <AboutUs theme="dark"/>}
         {currentPage === 'bet-predictions' && <BetPredictions />}
+        {currentPage === 'login' && <Login theme="dark" />}
+        {currentPage === 'register' && <Register theme="dark" />}
       </div>
     </main>
   );
