@@ -4,8 +4,8 @@ import Navbar from '../components/Navbar.js';
 import AboutUs from '../components/Model/AboutUs.js';
 import HomePage from "../components/HomePage.js";
 import BetPredictions from '../components/Model/BetPredictions.js';
-import Login from '../components/pages/Login.js'
-import Register from '../components/pages/Register.js'
+import Login from '../components/Login.js'
+import Register from '../components/Register.js'
 import Modal from 'react-modal';
 
 export default function Home() {

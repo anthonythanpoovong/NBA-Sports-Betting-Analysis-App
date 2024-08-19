@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs';
-import { connectToDatabase } from '../lib/mangodb';
+import { connectToDatabase } from '../../src/components/lib/mangodb'; // Correct the import path if necessary
+import path from 'path';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
+    console.log(req.body);
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
@@ -19,7 +21,7 @@ export default async function handler(req, res) {
 
       const hashedPassword = await bcrypt.hash(password, 12);
       await db.collection('users').insertOne({ email, password: hashedPassword });
-      
+
       return res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
       console.error('Database error:', err); // Log the error to the server console

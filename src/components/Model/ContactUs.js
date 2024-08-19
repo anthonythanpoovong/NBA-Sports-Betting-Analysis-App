@@ -3,13 +3,14 @@ import emailjs from 'emailjs-com';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Field, Label, Switch } from '@headlessui/react';
 
+
 const Example = () => {
   const [agreed, setAgreed] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
-
+  
   const togglePrivacyPolicy = () => {
     setShowPrivacyPolicy(!showPrivacyPolicy);
   };
@@ -46,10 +47,11 @@ const Example = () => {
 
     try {
       await emailjs.send(
-        'service_pxqmtns', // Replace with your EmailJS service ID
-        'template_yqo44pm', // Replace with your EmailJS template ID
+        process.env.NEXT_PUBLIC_EMAILJS_SER_ID, // Replace with your EmailJS service ID
+        process.env.NEXT_PUBLIC_EMAILJS_TEMP_ID, // Replace with your EmailJS template ID
         formData,
-        'KOvcA39Zk4St-Zijm' // Replace with your EmailJS user ID
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID // Replace with your EmailJS user ID
+        
       );
 
       setSubmitted(true);

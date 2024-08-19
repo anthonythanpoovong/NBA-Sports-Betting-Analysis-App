@@ -1,14 +1,15 @@
 // fetchNews.js
 import axios from 'axios';
 
-const API_KEY = 'f101cc9c03b844da9cc723a3bb0c4d4c'; // Replace with your News API key
+
+const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY; // Replace with your News API key
 const BASE_URL = 'https://newsapi.org/v2';
 
 export const fetchNbaNews = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/everything`, {
       params: {
-        q: 'NBA ',
+        q: 'NBA',
         apiKey: API_KEY,
         language: 'en',
         sortBy: 'publishedAt',

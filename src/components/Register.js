@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Footer from '../Footer';
+import Footer from './Footer';
+
 
 
 const Register = ({ theme }) => {
@@ -58,11 +59,13 @@ const Register = ({ theme }) => {
     }
 
     try {
-      const res = await fetch('pages/api/register.js', {
+      const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email, password: formData.password }),
       });
+
+      
 
       if (res.ok) {
         setSubmitted(true);
