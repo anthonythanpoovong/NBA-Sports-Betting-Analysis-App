@@ -6,6 +6,8 @@ import HomePage from "../components/HomePage.js";
 import BetPredictions from '../components/Model/BetPredictions.js';
 import Login from '../components/Login.js'
 import Register from '../components/Register.js'
+import ForgotPassword from '../components/ForgotPassword.js';
+import { ThemeProvider } from '../components/ThemeContext';
 import Modal from 'react-modal';
 
 export default function Home() {
@@ -21,6 +23,8 @@ export default function Home() {
         setCurrentPage('login');
       } else if (window.location.hash === '#register') {
         setCurrentPage('register');
+      } else if (window.location.hash === '#forgotpassword') {
+        setCurrentPage('forgotpassword');
       } else {
         setCurrentPage('home-page');
       }
@@ -46,6 +50,7 @@ export default function Home() {
         {currentPage === 'bet-predictions' && <BetPredictions />}
         {currentPage === 'login' && <Login theme="dark" />}
         {currentPage === 'register' && <Register theme="dark" />}
+        {currentPage === 'forgotpassword' && <ForgotPassword theme="dark" />}
       </div>
     </main>
   );

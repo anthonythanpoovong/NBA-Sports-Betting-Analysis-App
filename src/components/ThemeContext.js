@@ -1,23 +1,20 @@
-import React, { createContext, useContext, useState } from 'react';
+// ThemeContext.js
+import React, { createContext, useState, useContext } from 'react';
 
-// Create a context for the theme
 const ThemeContext = createContext();
 
-// Custom hook to use the theme context
-export const useTheme = () => useContext(ThemeContext);
-
-// Theme provider component
 export const ThemeProvider = ({ children }) => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true); // Initial theme is dark
+  const [theme, setTheme] = useState('dark'); // Default theme
 
   const toggleTheme = () => {
-    setIsDarkTheme((prevTheme) => !prevTheme);
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
-  const theme = {
-    isDarkTheme,
-    toggleTheme,
-  };
-
-  return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
+
+export const useTheme = () => useContext(ThemeContext);
