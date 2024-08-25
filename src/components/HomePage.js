@@ -3,24 +3,76 @@ import Footer from "./Footer";
 import Image from 'next/image';
 import nbalogo from "../assets/nba-logo-transparent.png";
 import { fetchNbaNews } from './fetchNews';
+import { jwtDecode } from 'jwt-decode';
 
 const HomePage = ({ theme }) => {
   const [newsArticles, setNewsArticles] = useState([]);
+  const [userName, setUserName] = useState('');
   const isDarkTheme = theme === 'dark';
 
   useEffect(() => {
+    // Retrieve the token and user data from localStorage
+    const token = localStorage.getItem('token');
+    const userData = JSON.parse(localStorage.getItem('user'));
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const email = decodedToken.email;
+
+        // Use user data from localStorage if available
+        if (userData) {
+          setUserName(userData.firstName);
+        } else {
+          // Fetch user data if not available in localStorage
+          const fetchUserData = async () => {
+            try {
+              const response = await fetch(`/api/user/${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+
+              if (response.ok) {
+                const { user } = await response.json();
+                setUserName(user.firstName); // Update state with user data
+              } else {
+                console.error('Failed to fetch user data');
+              }
+            } catch (error) {
+              console.error('Error fetching user data:', error);
+            }
+          };
+
+          fetchUserData();
+        }
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    }
+
+    // Fetch news articles
     const getNews = async () => {
       const articles = await fetchNbaNews();
       setNewsArticles(articles);
     };
     getNews();
-
-    
   }, []);
 
   return (
-    <div className={`flex flex-col min-h-screen ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      <main className="flex-grow py-12">
+    <div className={`relative flex flex-col min-h-screen ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
+      <div className="absolute inset-0 -z-10">
+        <iframe
+          src="https://www.youtube.com/embed/?playlist=kPwFhpczdOg&list=PLYdcOn2qLu90LCQ-abifWisXk5AwRb-l8&autoplay=1&mute=1&controls=0&loop=1&playlist=kPwFhpczdOg"
+          title="NBA Highlights"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full object-cover"
+        />
+      </div>
+      <main className="relative flex-grow py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-8">
             <div className="relative h-17 w-16 mx-auto mb-4">
@@ -31,8 +83,12 @@ const HomePage = ({ theme }) => {
                 objectFit="contain"
               />
             </div>
-            <h1 className={`text-4xl font-bold ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>NBA Prediction Hub</h1>
-            <p className={`mt-2 text-lg ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>Your go-to place for NBA predictions and insights</p>
+            <h1 className={`text-4xl font-bold ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>
+              Welcome {userName ? `${userName}` : ''} to NBA Prediction Hub
+            </h1>
+            <p className={`mt-2 text-lg ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>
+              Your go-to place for NBA predictions and insights
+            </p>
           </header>
 
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,6 +128,7 @@ const HomePage = ({ theme }) => {
           </section>
           
           <section className="mb-8">
+            <br/>
             <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
               <iframe
                 src="https://www.youtube.com/embed/?playlist=kPwFhpczdOg&list=PLYdcOn2qLu90LCQ-abifWisXk5AwRb-l8&autoplay=1&mute=1"
@@ -123,31 +180,14 @@ const HomePage = ({ theme }) => {
               <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
                 <h3 className="text-lg font-semibold mb-2">Game Prediction 1</h3>
                 <p className="text-sm text-gray-500 mb-4">Prediction details. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>View Prediction</a>
+                <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>See Prediction</a>
               </div>
-              <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
-                <h3 className="text-lg font-semibold mb-2">Game Prediction 2</h3>
-                <p className="text-sm text-gray-500 mb-4">Prediction details. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>View Prediction</a>
-              </div>
-              <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
-                <h3 className="text-lg font-semibold mb-2">Game Prediction 3</h3>
-                <p className="text-sm text-gray-500 mb-4">Prediction details. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <a href="#" className={`block text-center py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>View Prediction</a>
-              </div>
+              {/* End of prediction cards */}
             </div>
-          </section>
-
-          <section className="mt-12 text-center">
-            <h2 className={`text-2xl font-bold ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>More Insights</h2>
-            <p className={`mt-2 text-lg ${isDarkTheme ? 'text-gray-400' : 'text-gray-700'}`}>Explore additional insights into NBA teams, players, and statistics.</p>
-            <button className={`mt-6 block mx-auto py-3 px-8 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Explore More</button>
           </section>
         </div>
       </main>
-
-      {/* Footer component */}
-      <Footer theme={isDarkTheme ? 'dark' : 'light'} />
+      <Footer />
     </div>
   );
 };

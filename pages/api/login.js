@@ -26,7 +26,8 @@ export default async function handler(req, res) {
 
     const token = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, user: { email: user.email, firstName: user.firstName, lastName: user.lastName, createdAt: user.createdAt} });
+
   } catch (error) {
     console.error('Database error:', error);
     return res.status(500).json({ message: 'Internal server error' });
