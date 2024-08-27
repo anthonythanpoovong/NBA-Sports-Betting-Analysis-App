@@ -20,11 +20,13 @@ export default async function handler(req, res) {
       }
 
       const hashedPassword = await bcrypt.hash(password, 12);
+      const today = new Date().toISOString().split('T')[0];
       await db.collection('users').insertOne({
         firstName,
         lastName,
         email,
         password: hashedPassword,
+        createdAt: today,
       });
 
       return res.status(201).json({ message: 'User registered successfully' });

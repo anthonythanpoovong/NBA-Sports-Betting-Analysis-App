@@ -26,9 +26,11 @@ const Login = ({ theme }) => {
             console.log('Login successful, token:', data.token);
             // Save the token in localStorage or context as needed
             localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(user)); 
+            localStorage.setItem('user', JSON.stringify(data.user)); 
             // Optionally, redirect the user or update the UI
+            
             window.location.href = '#home-page'; // Redirect to a protected page or dashboard
+            window.location.reload();
         } catch (error) {
             setError(error.message);
         }

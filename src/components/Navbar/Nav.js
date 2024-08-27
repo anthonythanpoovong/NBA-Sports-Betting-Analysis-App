@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
@@ -17,6 +17,14 @@ function classNames(...classes) {
 export default function Example() {
   const [navigation, setNavigation] = useState(initialNavigation);
   const [isSun, setIsSun] = useState(true); // Initial state is sun
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State for user authentication
+
+  // Check if user is logged in on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token); 
+    setIsLoggedIn(!!token); // Set isLoggedIn based on the presence of the token
+  }, []);
 
   const handleNavigationClick = (clickedItemName) => {
     setNavigation((prevNavigation) =>
@@ -31,6 +39,19 @@ export default function Example() {
   const toggleIcon = () => {
     setIsSun(!isSun); // Toggle between sun and moon
   };
+
+  const handleSignOut = () => {
+    // Clear token and user data from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+
+    // Redirect to the home page
+    
+    window.location.href = '#home-page'; // Adjust this path based on your routing setup
+    window.location.reload();
+  };
+
 
   return (
     <Disclosure as="nav" className="bg-[#7f1d1d]">
@@ -116,26 +137,32 @@ export default function Example() {
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
               >
+                {!isLoggedIn && (
                 <MenuItem>
                   <a href="#login" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                     Sign on
                   </a>
                 </MenuItem>
+                 )}
+                 {isLoggedIn && (
                 <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                  <a href="#profile" onClick={() => window.location.href = '#profile'} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                     Your Profile
                   </a>
                 </MenuItem>
+                )}
                 <MenuItem>
                   <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
                     Settings
                   </a>
                 </MenuItem>
-                <MenuItem>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                    Sign out
-                  </a>
-                </MenuItem>
+                  {isLoggedIn && (
+                      <MenuItem>
+                      <a href="#" onClick={handleSignOut} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                        Sign out
+                      </a>
+                    </MenuItem>
+                  )}
               </MenuItems>
             </Menu>
           </div>
