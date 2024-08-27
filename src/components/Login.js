@@ -5,9 +5,13 @@ const Login = ({ theme }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
+        setSubmitted(false);
 
         try {
             const response = await fetch('/api/login', {
@@ -24,19 +28,21 @@ const Login = ({ theme }) => {
 
             const data = await response.json();
             console.log('Login successful, token:', data.token);
-            // Save the token in localStorage or context as needed
             localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user)); 
-            // Optionally, redirect the user or update the UI
+            localStorage.setItem('user', JSON.stringify(data.user));
             
-            window.location.href = '#home-page'; // Redirect to a protected page or dashboard
-            window.location.reload();
+            setSubmitted(true);
+            setTimeout(() => {
+                window.location.href = '#home-page'; 
+                window.location.reload();
+            }, 1000); // Delay redirect to show success message
+
         } catch (error) {
             setError(error.message);
+        } finally {
+            setSubmitting(false);
         }
     };
-
-    
 
     return (
         <div className={`flex flex-col min-h-screen bg-gray-900 text-gray-300 ${theme === 'dark' ? 'bg-gray-900 text-gray-300' : 'bg-gray-100 text-gray-900'}`}>
@@ -88,9 +94,26 @@ const Login = ({ theme }) => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={submitting}
+                                className={`flex w-full justify-center rounded-md px-3.5 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm transition-transform duration-300 ease-in-out ${submitting ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-500'} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
                             >
-                                Sign in
+                                {submitting ? (
+                                    <div className="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 mr-2 animate-spin">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                        </svg>
+                                        <span>Signing in...</span>
+                                    </div>
+                                ) : submitted ? (
+                                    <div className="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`h-6 w-6 mr-2 ${submitted ? 'animate-slideRight opacity-0' : ''}`}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                        </svg>
+                                        <span className={`${submitted ? 'opacity-0' : ''}`}>Signed in!</span>
+                                    </div>
+                                ) : (
+                                    'Sign in'
+                                )}
                             </button>
                         </div>
                     </form>

@@ -60,7 +60,7 @@ const ProfilePage = ({ theme }) => {
           <header className="text-center mb-8">
             <div className="relative h-32 w-32 mx-auto mb-4"> {/* Updated height and width */}
               <Image
-                src="/logo.png"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt="Profile Placeholder"
                 layout="intrinsic" // Use intrinsic layout if you have fixed dimensions
                 width={128}
@@ -80,7 +80,7 @@ const ProfilePage = ({ theme }) => {
             <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
               <div className="flex-shrink-0">
                 <Image
-                  src="/logo.png" // Placeholder image for profile
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"// Placeholder image for profile
                   alt="Profile Picture"
                   width={150}
                   height={150}
@@ -91,7 +91,7 @@ const ProfilePage = ({ theme }) => {
                 <p className="text-lg font-semibold">Name: {userProfile.firstName} {userProfile.lastName}</p>
                 <p className="text-lg">Email: {userProfile.email}</p>
                 <p className="text-lg">Member Since: {userProfile.createdAt}</p>
-                <button className={`mt-4 py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Edit Profile</button>
+                <button href = "#edit" onClick={() => window.location.href = '#edit'} className={`mt-4 py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Edit Profile</button>
               </div>
             </div>
           </section>

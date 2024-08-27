@@ -4,7 +4,7 @@ const Footer = ({ theme }) => {
   const isDarkTheme = theme === 'dark';
 
   return (
-    <footer className={`bg-gray-800 ${isDarkTheme ? 'text-gray-400' : 'text-gray-300'} w-full px-4 sm:px-6 lg:px-8 py-8`}>
+    <footer className={`bg-gray-800 bg-opacity-95 ${isDarkTheme ? 'text-gray-400' : 'text-gray-300'} w-full px-4 sm:px-6 lg:px-8 py-8`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <h3 className="text-lg font-semibold mb-2">About NBA Prediction Hub</h3>

@@ -90,7 +90,7 @@ const AboutUs = ({ theme }) => {
           </div>
           <div className="mt-10 grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {teamMembers.map((member) => (
-              <div key={member.name} className={`rounded-lg shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
+              <div key={member.name} className={`rounded-lg shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} slide-up`}>
                 <img className="w-full h-56 object-cover" src={member.imageUrl} alt={member.name} />
                 <div className="p-6">
                   <h3 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{member.name}</h3>
@@ -99,21 +99,15 @@ const AboutUs = ({ theme }) => {
                   <div className="mt-4 flex space-x-3">
                     <a href={member.github} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
                       <span className="sr-only">GitHub</span>
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M12 2C6.478 2 2 6.478 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.461-1.11-1.461-.907-.62.069-.607.069-.607 1.002.07 1.53 1.03 1.53 1.03.892 1.528 2.341 1.087 2.91.831.092-.646.349-1.087.634-1.338-2.22-.254-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.447-1.274.097-2.654 0 0 .84-.269 2.75 1.024A9.561 9.561 0 0112 6.837c.85.004 1.705.114 2.504.334 1.909-1.293 2.748-1.024 2.748-1.024.546 1.38.202 2.401.1 2.654.641.699 1.028 1.592 1.028 2.683 0 3.841-2.339 4.685-4.565 4.934.36.31.678.924.678 1.861 0 1.345-.012 2.427-.012 2.754 0 .268.18.58.688.482A10.002 10.002 0 0022 12c0-5.522-4.478-10-10-10z" clipRule="evenodd" />
-                      </svg>
+                      {/* SVG for GitHub icon */}
                     </a>
                     <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
                       <span className="sr-only">LinkedIn</span>
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M19.25 3H4.75C4.34 3 4 3.34 4 3.75v16.5c0 .41.34.75.75.75h14.5c.41 0 .75-.34.75-.75V3.75c0-.41-.34-.75-.75-.75zM8.75 18h-2V9h2v9zm-1-10.02c-.69 0-1.25-.57-1.25-1.27 0-.7.56-1.26 1.25-1.26.69 0 1.25.56 1.25 1.26 0 .7-.56 1.27-1.25 1.27zm10.75 10.02h-2v-4.83c0-2.11-2.5-1.95-2.5 0V18h-2V9h2v1.02c.87-1.68 4-1.81 4 1.6V18z" clipRule="evenodd" />
-                      </svg>
+                      {/* SVG for LinkedIn icon */}
                     </a>
                     <a href={member.instagram} target="_blank" rel="noopener noreferrer" className={`text-gray-400 hover:text-white ${theme === 'dark' ? 'hover:text-gray-200' : 'hover:text-gray-800'}`}>
                       <span className="sr-only">Instagram</span>
-                      <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fillRule="evenodd" d="M7.75 2C5.13 2 3 4.13 3 6.75v10.5C3 19.87 5.13 22 7.75 22h10.5c2.62 0 4.75-2.13 4.75-4.75V6.75C23 4.13 20.87 2 18.25 2H7.75zM7.5 4h9c1.93 0 3.5 1.57 3.5 3.5v9c0 1.93-1.57 3.5-3.5 3.5h-9C5.57 20 4 18.43 4 16.5v-9C4 5.57 5.57 4 7.5 4zm7.5 2.25a.75.75 0 110 1.5.75.75 0 010-1.5zm-5.75 3a4 4 0 100 8 4 4 0 000-8zm0 1.5a2.5 2.5 0 110 5 2.5 2.5 0 010-5z" clipRule="evenodd" />
-                      </svg>
+                      {/* SVG for Instagram icon */}
                     </a>
                   </div>
                   <div className="mt-4">
@@ -148,7 +142,7 @@ const AboutUs = ({ theme }) => {
                       {member.testimonials.map((testimonial, index) => (
                         <div key={index} className="mt-4">
                           <p className={`text-gray-300 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{testimonial.quote}</p>
-                          <p className={`text-gray-400 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{testimonial.author}</p>
+                          <p className={`text-gray-400 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>- {testimonial.author}</p>
                         </div>
                       ))}
                     </div>
@@ -157,9 +151,9 @@ const AboutUs = ({ theme }) => {
               </div>
             ))}
           </div>
-          <ContactUs />
         </div>
       </main>
+      <ContactUs theme={theme} />
       <Footer theme={theme} />
     </div>
   );
