@@ -3,11 +3,13 @@ import Footer from "./Footer";
 import Image from 'next/image';
 import nbalogo from "../assets/nba-logo-transparent.png";
 import { fetchNbaNews } from './fetchNews';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Navbar from "./Navbar";
+import { fetchUpcomingMatches } from './fetchNBA'; // Ensure correct import path
 
 const HomePage = ({ theme }) => {
   const [newsArticles, setNewsArticles] = useState([]);
+  const [upcomingMatches, setUpcomingMatches] = useState([]);
   const [userName, setUserName] = useState('');
   const isDarkTheme = theme === 'dark';
 
@@ -54,7 +56,14 @@ const HomePage = ({ theme }) => {
       const articles = await fetchNbaNews();
       setNewsArticles(articles);
     };
+
+    const getUpcomingMatches = async () => {
+      const matches = await fetchUpcomingMatches();
+      setUpcomingMatches(matches);
+    };
+
     getNews();
+    getUpcomingMatches();
   }, []);
 
   return (
@@ -73,8 +82,11 @@ const HomePage = ({ theme }) => {
             allowFullScreen
             className="absolute top-0 left-0 w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div> {/* Vignette effect */}
         </div>
       </div>
+
       {/* Content that scrolls over the video */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <main className="flex-grow py-12">
@@ -101,16 +113,24 @@ const HomePage = ({ theme }) => {
               <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} slide-up`}>
                 <h2 className="text-xl font-semibold mb-4">Upcoming Matches</h2>
                 <ul>
-                  <li className="flex items-center justify-between py-2">
-                    <span className="font-semibold">Team A vs Team B</span>
-                    <span className="text-gray-500">Date & Time</span>
-                  </li>
-                  <li className="flex items-center justify-between py-2">
-                    <span className="font-semibold">Team C vs Team D</span>
-                    <span className="text-gray-500">Date & Time</span>
-                  </li>
+                  {upcomingMatches.length > 0 ? (
+                    upcomingMatches.slice(0, 2).map((match) => (
+                      <li key={match.id} className="flex items-center justify-between py-2">
+                        <span className="font-semibold">
+                          {match.home_team.full_name} vs {match.visitor_team.full_name}
+                        </span>
+                        <span className="text-gray-500">
+                          {new Date(match.date).toLocaleString()} {/* Format the date */}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="py-2">No upcoming matches.</li>
+                  )}
                 </ul>
-                <button className={`mt-4 block w-full py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>View All Predictions</button>
+                <button className={`mt-4 block w-full py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>
+                  View All Predictions
+                </button>
               </div>
 
               <div className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} slide-up`}>
@@ -125,7 +145,9 @@ const HomePage = ({ theme }) => {
                     <span className="text-gray-500 ml-auto">Accuracy: XX%</span>
                   </li>
                 </ul>
-                <button className={`mt-4 block w-full py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>Explore Predictors</button>
+                <button className={`mt-4 block w-full py-2 px-4 rounded ${isDarkTheme ? 'bg-gray-700 text-gray-400 hover:bg-gray-600' : 'bg-blue-500 text-white hover:bg-blue-600'}`}>
+                  Explore Predictors
+                </button>
               </div>
             </section>
 

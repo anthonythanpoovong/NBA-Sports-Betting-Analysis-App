@@ -122,6 +122,7 @@ const EditProfile = ({ theme }) => {
       setSubmitting(false);
     }
   };
+  
 
   return (
     <div id="edit" className={`flex flex-col min-h-screen bg-${isDarkTheme ? 'gray-900' : 'white'} text-${isDarkTheme ? 'gray-300' : 'gray-900'}`}>
