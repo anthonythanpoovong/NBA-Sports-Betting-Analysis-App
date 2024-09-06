@@ -9,22 +9,21 @@ const BetPredictionsPage = ({ theme }) => {
   const isDarkTheme = theme === 'dark';
 
   useEffect(() => {
-    // Fetch NBA games (replace with your API or mock data)
+    // Fetch NBA games from the local API
     const fetchGames = async () => {
       try {
-        const response = await fetch('ML/NBA(1).ipynb'); // Replace with actual API
+        const response = await fetch('ML/nba.py');
         const data = await response.json();
         setGames(data);
       } catch (error) {
         console.error('Error fetching NBA games:', error);
       }
     };
-    
+
     fetchGames();
   }, []);
 
   const handlePrediction = (gameId, prediction) => {
-    // Update state with the prediction (this can be sent to an API if necessary)
     setBetPredictions(prev => [...prev, { gameId, prediction }]);
   };
 
