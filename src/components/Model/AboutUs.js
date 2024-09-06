@@ -15,7 +15,7 @@ const teamMembers = [
     imageUrl: abel.src,
     bio: 'Abel is a skilled frontend developer with a passion for creating interactive user experiences.',
     github: 'https://github.com/AT1XX',
-    linkedin: 'https://www.linkedin.com/in/abel-thomas-921bab251/',
+    linkedin: 'https://www.linkedin.com/in/abel-abraham-thomas-921bab251/',
     instagram: 'https://www.instagram.com/abel.thoms1/',
     skills: ['React', 'JavaScript', 'Node', 'Python', 'Java', 'SQL'],
     projects: [
@@ -60,7 +60,7 @@ const teamMembers = [
     imageUrl: dylan.src,
     bio: 'Going to Edit this because we havent fully changed this page yet',
     github: 'https://github.com/dylanccli',
-    linkedin: 'linkedin.com/in/dylan-li-a949602b9',
+    linkedin: 'https://linkedin.com/in/dylan-li-a949602b9',
     instagram: 'https://www.instagram.com/dylanccli/',
     skills: ['Java', 'Python', 'SQL', 'HTML', 'CSS','Linux'],
     projects: [
