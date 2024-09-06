@@ -12,8 +12,10 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.2",
     "emailjs-com": "^3.2.0",
+    "i": "^0.3.7",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18"
