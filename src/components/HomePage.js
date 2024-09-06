@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import Footer from "./Footer";
+import { jwtDecode } from 'jwt-decode';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import nbalogo from "../assets/nba-logo-transparent.png";
 import { fetchNbaNews } from './fetchNews';
-import { jwtDecode } from 'jwt-decode';
+import Footer from "./Footer";
 
 const HomePage = ({ theme }) => {
   const [newsArticles, setNewsArticles] = useState([]);
