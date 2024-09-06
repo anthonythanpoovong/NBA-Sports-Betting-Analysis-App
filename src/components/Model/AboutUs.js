@@ -20,7 +20,7 @@ const teamMembers = [
     skills: ['React', 'JavaScript', 'Node', 'Python', 'Java', 'SQL'],
     projects: [
       {
-        name: 'Personal Portfolio',
+        name: 'Abel Personal Portfolio',
         imageUrl: ATLink.src,
         description: 'A personalized website built utilizing React.',
         url: 'https://at2002.netlify.app/',
@@ -93,7 +93,7 @@ const AboutUs = ({ theme }) => {
             <p className={`mt-1 text-4xl font-extrabold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} sm:text-5xl lg:text-6xl`}>Meet Our Team</p>
             <p className={`mx-auto mt-5 max-w-xl text-xl ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>We are a group of passionate developers committed to building great products.</p>
           </div>
-          <div className="mt-10 grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 slide-up">
             {teamMembers.map((member) => (
               <div key={member.name} className={`rounded-lg shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
                 <img className="w-full h-56 object-cover" src={member.imageUrl} alt={member.name} />
