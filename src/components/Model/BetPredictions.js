@@ -28,7 +28,7 @@ const BetPredictionsPage = ({ theme }) => {
   };
 
   return (
-    <div className={`relative flex flex-col min-h-screen ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
+    <div id = 'bet' className={`relative flex flex-col min-h-screen ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
       <div className="relative flex-grow py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <header className="text-center mb-8">
@@ -48,10 +48,10 @@ const BetPredictionsPage = ({ theme }) => {
             </p>
           </header>
 
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 slide-up">
             {games.length > 0 ? (
               games.map((game, index) => (
-                <div key={index} className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'}`}>
+                <div key={index} className={`p-6 shadow-lg rounded-lg ${isDarkTheme ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} `}>
                   <h2 className="text-xl font-semibold mb-4">{game.teamA} vs {game.teamB}</h2>
                   <p className="text-gray-500">Date: {new Date(game.date).toLocaleDateString()}</p>
                   <p className="text-gray-500">Time: {new Date(game.date).toLocaleTimeString()}</p>
@@ -78,7 +78,7 @@ const BetPredictionsPage = ({ theme }) => {
             )}
           </section>
 
-          <section className="mt-12 text-center">
+          <section className="mt-12 text-center slide-up">
             <h2 className={`text-2xl font-bold ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>Your Predictions</h2>
             <ul className="mt-4">
               {betPredictions.length > 0 ? (

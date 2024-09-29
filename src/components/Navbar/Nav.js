@@ -6,8 +6,8 @@ import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 const initialNavigation = [
   { name: 'Home Page', href: '#home-page', current: true },
   { name: 'Bet Predictions', href: '#bet-predictions', current: false },
+  { name: 'Standings/Stats', href: '#matches', current: false },
   { name: 'About Us', href: '#about-us', current: false },
-  { name: 'Extra Nav', href: '#', current: false },
 ];
 
 function classNames(...classes) {

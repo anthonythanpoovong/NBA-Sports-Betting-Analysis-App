@@ -9,6 +9,7 @@ import Register from '../components/Register.js'
 import ForgotPassword from '../components/ForgotPassword.js';
 import ProfilePage from "../components/Navbar/ProfilePage.js";
 import EditProfile from "../components/Navbar/EditProfile.js";
+import Matches from "../components/Model/Matches.js";
 import { ThemeProvider } from '../components/ThemeContext';
 import Modal from 'react-modal';
 
@@ -31,6 +32,8 @@ export default function Home() {
         setCurrentPage('profile');
       } else if (window.location.hash === '#edit') {
         setCurrentPage('edit');
+      } else if (window.location.hash === '#matches') {
+        setCurrentPage('matches');
       } else {
         setCurrentPage('home-page');
       }
@@ -53,12 +56,14 @@ export default function Home() {
         <Navbar />
         {currentPage === 'home-page' && <HomePage theme="dark"/>}
         {currentPage === 'about-us' && <AboutUs theme="dark"/>}
-        {currentPage === 'bet-predictions' && <BetPredictions />}
+        {currentPage === 'bet-predictions' && <BetPredictions theme="dark" />}
+        {currentPage === 'matches' && <Matches theme="dark" />}
         {currentPage === 'login' && <Login theme="dark" />}
         {currentPage === 'register' && <Register theme="dark" />}
         {currentPage === 'forgotpassword' && <ForgotPassword theme="dark" />}
         {currentPage === 'profile' && <ProfilePage theme="dark" />}
         {currentPage === 'edit' && <EditProfile theme="dark" />}
+        
       </div>
     </main>
   );

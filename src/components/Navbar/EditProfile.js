@@ -9,6 +9,7 @@ const EditProfile = ({ theme }) => {
     oldPassword: '',
     newPassword: '',
     confirmNewPassword: '',
+    profilePicture: null, // New state for the profile picture
   });
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
@@ -36,7 +37,6 @@ const EditProfile = ({ theme }) => {
           ...prevData,
           email: emailFromToken,
         }));
-
       } catch (error) {
         console.error('Error decoding token:', error);
       }
@@ -44,11 +44,14 @@ const EditProfile = ({ theme }) => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
-    if (name === 'newPassword') {
-      validatePassword(value);
+    const { name, value, type, files } = e.target;
+    if (type === 'file') {
+      setFormData({ ...formData, profilePicture: files[0] }); // Store the selected file
+    } else {
+      setFormData({ ...formData, [name]: value });
+      if (name === 'newPassword') {
+        validatePassword(value);
+      }
     }
   };
 
@@ -83,29 +86,32 @@ const EditProfile = ({ theme }) => {
       return;
     }
 
+    const formDataToSubmit = new FormData(); // Use FormData for file uploads
+    formDataToSubmit.append('email', email);
+    formDataToSubmit.append('firstName', formData.firstName);
+    formDataToSubmit.append('lastName', formData.lastName);
+    if (changePassword) {
+      formDataToSubmit.append('oldPassword', formData.oldPassword);
+      formDataToSubmit.append('newPassword', formData.newPassword);
+    }
+    if (formData.profilePicture) {
+      formDataToSubmit.append('profilePicture', formData.profilePicture); // Append the file
+    }
+
     try {
       const res = await fetch('/api/user/update', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          oldPassword: changePassword ? formData.oldPassword : undefined,
-          newPassword: changePassword ? formData.newPassword : undefined,
-        }),
+        body: formDataToSubmit, // Send FormData
       });
 
       if (res.ok) {
         const currentUser = JSON.parse(localStorage.getItem('user'));
-        const updatedUser
-         = {
+        const updatedUser = {
           ...currentUser,
           email,
           firstName: formData.firstName,
           lastName: formData.lastName,
-        
-          
+          // Optionally add the profile picture URL after upload
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setSubmitted(true);
@@ -122,7 +128,6 @@ const EditProfile = ({ theme }) => {
       setSubmitting(false);
     }
   };
-  
 
   return (
     <div id="edit" className={`flex flex-col min-h-screen bg-${isDarkTheme ? 'gray-900' : 'white'} text-${isDarkTheme ? 'gray-300' : 'gray-900'}`}>
@@ -169,9 +174,7 @@ const EditProfile = ({ theme }) => {
                 onChange={handleCheckboxChange}
                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
               />
-              <label htmlFor="changePassword" className="text-sm font-semibold leading-6">
-                Change Password
-              </label>
+              <label htmlFor="changePassword" className="text-sm font-semibold leading-6">Change Password</label>
             </div>
             {changePassword && (
               <>
@@ -199,38 +202,6 @@ const EditProfile = ({ theme }) => {
                       onChange={handleChange}
                       className={`block w-full rounded-md border-0 px-3.5 py-2 ${isDarkTheme ? 'bg-gray-800 text-gray-300 ring-gray-600 placeholder:text-gray-500' : 'bg-white text-gray-900 ring-gray-300 placeholder:text-gray-500'} shadow-sm focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                     />
-                    <ul className="mt-2 text-sm">
-                      <li className={`flex items-center ${passwordValid.length ? 'text-green-500' : 'text-red-500'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.length ? 'text-green-500' : 'text-red-500'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-11a1 1 0 0 0-2 0v4a1 1 0 0 0 2 0v-4zm0 6a1 1 0 0 0-2 0v1a1 1 0 0 0 2 0v-1z" clipRule="evenodd" />
-                        </svg>
-                        At least 8 characters
-                      </li>
-                      <li className={`flex items-center ${passwordValid.uppercase ? 'text-green-500' : 'text-red-500'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.uppercase ? 'text-green-500' : 'text-red-500'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-11a1 1 0 0 0-2 0v4a1 1 0 0 0 2 0v-4zm0 6a1 1 0 0 0-2 0v1a1 1 0 0 0 2 0v-1z" clipRule="evenodd" />
-                        </svg>
-                        At least one uppercase letter
-                      </li>
-                      <li className={`flex items-center ${passwordValid.lowercase ? 'text-green-500' : 'text-red-500'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.lowercase ? 'text-green-500' : 'text-red-500'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-11a1 1 0 0 0-2 0v4a1 1 0 0 0 2 0v-4zm0 6a1 1 0 0 0-2 0v1a1 1 0 0 0 2 0v-1z" clipRule="evenodd" />
-                        </svg>
-                        At least one lowercase letter
-                      </li>
-                      <li className={`flex items-center ${passwordValid.number ? 'text-green-500' : 'text-red-500'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.number ? 'text-green-500' : 'text-red-500'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-11a1 1 0 0 0-2 0v4a1 1 0 0 0 2 0v-4zm0 6a1 1 0 0 0-2 0v1a1 1 0 0 0 2 0v-1z" clipRule="evenodd" />
-                        </svg>
-                        At least one number
-                      </li>
-                      <li className={`flex items-center ${passwordValid.special ? 'text-green-500' : 'text-red-500'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.special ? 'text-green-500' : 'text-red-500'}`} viewBox="http://www.w3.org/2000/svg" className={`h-4 w-4 mr-2 ${passwordValid.special ? 'text-green-500' : 'text-red-500'}`} fill="currentColor" aria-hidden="true">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm1-11a1 1 0 0 0-2 0v4a1 1 0 0 0 2 0v-4zm0 6a1 1 0 0 0-2 0v1a1 1 0 0 0 2 0v-1z" clipRule="evenodd" />
-                        </svg>
-                        At least one special character
-                      </li>
-                    </ul>
                   </div>
                 </div>
                 <div>
@@ -248,26 +219,31 @@ const EditProfile = ({ theme }) => {
                 </div>
               </>
             )}
-            {error && (
-              <div className="text-red-500 text-sm">
-                {error}
+            <div>
+              <label htmlFor="profilePicture" className="block text-sm font-semibold leading-6">Profile Picture</label>
+              <div className="mt-2">
+                <input
+                  id="profilePicture"
+                  name="profilePicture"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-300 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+                />
               </div>
-            )}
-            {submitted && (
-              <div className="text-green-500 text-sm">
-                Profile updated successfully!
-              </div>
-            )}
+            </div>
+            {error && <div className="text-red-500 text-sm">{error}</div>}
             <div>
               <button
                 type="submit"
                 disabled={submitting}
-                className={`flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm ring-1 ring-indigo-600 transition-transform duration-300 ease-in-out ${submitting ? 'opacity-50 cursor-not-allowed' : ''} ${submitted ? 'animate-pulse' : ''} ${isDarkTheme ? 'hover:bg-indigo-700' : 'hover:bg-indigo-500'}`}
+                className={`flex justify-center w-full rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${submitting ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
-                {submitting ? 'Saving Changes...' : submitted ? 'Profile Updated!' : 'Save Changes'}
+                {submitting ? 'Submitting...' : 'Save Changes'}
               </button>
             </div>
           </form>
+          {submitted && <div className="mt-4 text-green-500">Profile updated successfully!</div>}
         </div>
       </main>
     </div>

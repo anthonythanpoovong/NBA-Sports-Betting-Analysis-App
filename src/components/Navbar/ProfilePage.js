@@ -6,6 +6,7 @@ import {jwtDecode} from 'jwt-decode'; // Import jwtDecode directly
 const ProfilePage = ({ theme }) => {
   const [userProfile, setUserProfile] = useState({});
   const [userName, setUserName] = useState('');
+  const [imageFile, setImageFile] = useState(null); 
   const isDarkTheme = theme === 'dark';
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const ProfilePage = ({ theme }) => {
           <header className="text-center mb-8">
             <div className="relative h-32 w-32 mx-auto mb-4"> {/* Updated height and width */}
               <Image
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={userProfile.profilePicture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"} // Use updated profile picture or placeholder
                 alt="Profile Placeholder"
                 layout="intrinsic" // Use intrinsic layout if you have fixed dimensions
                 width={128}

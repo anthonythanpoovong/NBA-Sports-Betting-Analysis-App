@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      return res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, createdAt: user.createdAt } });
+      return res.status(200).json({ user: { email: user.email, firstName: user.firstName, lastName: user.lastName, createdAt: user.createdAt, profilePicture: user.profilePicture } });
     } catch (err) {
       console.error('Database error:', err);
       return res.status(500).json({ message: 'Internal server error' });
